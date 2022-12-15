@@ -36,17 +36,17 @@
 
     </div>  
     <script>
-        let req = "<%= req %>"  ; 
-        var decodedString = req.split('&quot;').join('"')  ;  
+        let req = "<%= req %>"; 
+        var decodedString = req.split('&#34;').join('"');
         var wrapper = document.getElementById("reqCode"); 
         // or from a string by JSON.parse(str) method
         var dataStr = decodedString;
         try {
             var data = JSON.parse(dataStr);
         } catch (e) {}
-
+        
         // Create json-tree
-        var tree = jsonTree.create(data, wrapper);  
+        var tree = jsonTree.create(data, wrapper);
     </script>
 </body> 
 </html>

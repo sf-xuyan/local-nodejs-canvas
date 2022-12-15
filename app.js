@@ -3,7 +3,7 @@ var express = require('express'),
   path = require('path') 
 var app = express();
 var crypto = require("crypto");
-var consumerSecretApp = process.env.CANVAS_CONSUMER_SECRET || '5AE4CA1543118B24EDA3A67A68BFB4AB7564E6229C33AABD09416D36BC9CA3CB';
+var consumerSecretApp = process.env.CANVAS_CONSUMER_SECRET || '0E3A39F715EA2C3E1FB7A8BEA89D0AA1BD6CEE1F9D50C30879BE5231049677AE';
 
 console.log('consumer secret - '+consumerSecretApp);
 
@@ -27,11 +27,10 @@ app.post('/', function (req, res) {
     var check = crypto.createHmac("sha256", consumerSecretApp).update(encoded_envelope).digest("base64");
 
     if (check === consumerSecret) { 
-        var envelope = JSON.parse(new Buffer(encoded_envelope, "base64").toString("ascii"));
+        var envelope = JSON.parse(new Buffer.from(encoded_envelope, "base64").toString("ascii"));
         //req.session.salesforce = envelope;
         console.log("got the session object:");
         console.log(envelope);
-        console.log(JSON.stringify(envelope) );
         res.render('index', { title: envelope.context.user.userName, req : JSON.stringify(envelope) });
     }else{
         res.send("authentication failed");
